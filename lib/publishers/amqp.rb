@@ -6,8 +6,8 @@ module Publishers
     def initialize attributes = nil
       attributes ||= {}
 
-      key    = attributes[:key]
-      config = attributes.fetch(:config) do
+      self.key    = attributes[:key]
+      self.config = attributes.fetch(:config) do
         Publishers.default_options[:amqp][:config]
       end
     end

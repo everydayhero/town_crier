@@ -7,7 +7,7 @@ require "publishers/version"
 
 module Publishers
   def self.default_options
-    @default_options = {
+    @default_options ||= {
       :amqp  => {
         :config   => {
           :user     => 'guest',
