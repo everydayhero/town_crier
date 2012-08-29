@@ -1,10 +1,9 @@
 module Publishers
   class Null
-    def initialize attributes = nil
+    def initialize attributes
     end
 
-    def publish data
-      Rails.logger.info "published: #{data}"
+    def publish payload
     end
   end
 end

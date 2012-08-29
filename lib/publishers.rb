@@ -19,4 +19,19 @@ module Publishers
       :hosts => {}
     }
   end
+
+  def self.default_publisher
+    @default_publisher ||= begin
+      publisher = default_options.fetch(:publisher) { AMQP }
+      "Publishers::#{publisher}".constantize
+    end
+  end
+
+  def self.default_publisher= new_publisher
+    @default_publisher = new_publisher
+  end
+
+  def self.new options
+    default_publisher.new options
+  end
 end
