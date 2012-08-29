@@ -1,6 +1,6 @@
 require 'net/http'
 
-module Publishers
+module TownCrier
   class HTTP
     attr_reader :hosts
 
@@ -8,7 +8,7 @@ module Publishers
       attributes ||= {}
 
       self.hosts = attributes.fetch(:hosts) do
-        Publishers.default_options[:hosts]
+        TownCrier.default_options[:hosts]
       end
     end
 

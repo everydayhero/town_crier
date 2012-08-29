@@ -1,4 +1,4 @@
-module Publishers
+module TownCrier
   class Null
     def initialize attributes
     end

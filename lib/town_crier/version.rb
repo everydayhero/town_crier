@@ -1,3 +1,3 @@
-module Publishers
+module TownCrier
   VERSION = "0.0.2"
 end

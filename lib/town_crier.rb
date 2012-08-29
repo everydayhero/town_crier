@@ -1,11 +1,11 @@
 require "bunny"
-require "publishers/amqp"
-require "publishers/http"
-require "publishers/null"
-require "publishers/railtie"
-require "publishers/version"
+require "town_crier/amqp"
+require "town_crier/http"
+require "town_crier/null"
+require "town_crier/railtie"
+require "town_crier/version"
 
-module Publishers
+module TownCrier
   def self.default_options
     @default_options ||= {
       :amqp  => {
@@ -23,7 +23,7 @@ module Publishers
   def self.default_publisher
     @default_publisher ||= begin
       publisher = default_options.fetch(:publisher) { AMQP }
-      "Publishers::#{publisher}".constantize
+      "TownCrier::#{publisher}".constantize
     end
   end
 

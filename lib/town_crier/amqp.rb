@@ -1,4 +1,4 @@
-module Publishers
+module TownCrier
   class AMQP
     attr_accessor :key, :config
     attr_writer :client, :exchange
@@ -8,14 +8,14 @@ module Publishers
 
       self.key    = attributes[:key]
       self.config = attributes.fetch(:config) do
-        Publishers.default_options[:amqp][:config]
+        TownCrier.default_options[:amqp][:config]
       end
     end
 
-    def publish data
-      exchange.publish data, :content_type => 'application/json',
-                             :persistent   => true,
-                             :key          => key
+    def publish payload
+      exchange.publish payload, :content_type => 'application/json',
+                                :persistent   => true,
+                                :key          => key
     end
 
     def client
@@ -27,7 +27,7 @@ module Publishers
     end
 
     def exchange
-      @exchange ||= client.exchange Publishers.default_options[:amqp][:exchange],
+      @exchange ||= client.exchange TownCrier.default_options[:amqp][:exchange],
                                     :durable => true
     end
   end
