@@ -2,7 +2,8 @@ require "bunny"
 require "town_crier/amqp"
 require "town_crier/http"
 require "town_crier/null"
-require "town_crier/railtie"
+require "town_crier/lint"
+require "town_crier/railtie" if defined?(Rails)
 require "town_crier/version"
 
 module TownCrier
