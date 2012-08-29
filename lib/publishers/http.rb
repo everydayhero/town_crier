@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Publishers
   class HTTP
     attr_reader :hosts
@@ -15,7 +17,7 @@ module Publishers
     end
 
     def publisher_for uri
-      publisher = publishers.fetch uri.split('//').first, 'http'
+      publisher = publishers.fetch uri.to_s.split('://').first, NonSSL
       publisher.new uri
     end
 
@@ -24,7 +26,7 @@ module Publishers
     end
 
     def hosts= hosts
-      @hosts = hosts.map { |_, url| URI(url + '/api/private/receivers') }
+      @hosts = hosts.map { |_, url| URI(url + '/api/private/receive') }
     end
 
     class NonSSL
@@ -39,13 +41,13 @@ module Publishers
       end
 
       def publish payload
-        request.set_form_data payload
+        request.set_form_data :payload => payload
         http.request request
       rescue Exception => e
         Rails.logger.info "Couldn't send payload to #{uri}."
       end
 
-      def request data
+      def request
         @request ||= Net::HTTP::Post.new uri.request_uri
       end
 
