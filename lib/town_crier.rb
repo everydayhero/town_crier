@@ -23,7 +23,7 @@ module TownCrier
 
   def self.default_publisher
     @default_publisher ||= begin
-      publisher = default_options.fetch(:publisher) { AMQP }
+      publisher = default_options.fetch(:publisher) { "AMQP" }
       "TownCrier::#{publisher}".constantize
     end
   end
