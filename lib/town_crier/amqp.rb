@@ -27,8 +27,9 @@ module TownCrier
     end
 
     def exchange
-      @exchange ||= client.exchange TownCrier.default_options[:amqp][:exchange],
-                                    :durable => true
+      @exchange ||= client.exchange 'town_crier',
+                                    :durable => true,
+                                    :type    => :topic
     end
   end
 end
