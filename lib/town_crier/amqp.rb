@@ -16,6 +16,8 @@ module TownCrier
       exchange.publish payload, :content_type => 'application/json',
                                 :persistent   => true,
                                 :key          => key
+    rescue => e
+      raise PublishError.new('A publishing error occurred', e)
     end
 
     def client
