@@ -12,10 +12,10 @@ module TownCrier
       end
     end
 
-    def publish payload
+    def publish payload, options = {}
       exchange.publish payload, :content_type => 'application/json',
                                 :persistent   => true,
-                                :key          => key
+                                :key          => options[:test] ? "test.#{key}" : key
     rescue => e
       raise PublishError.new('A publishing error occurred', e)
     end
