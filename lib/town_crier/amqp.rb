@@ -24,7 +24,7 @@ module TownCrier
     end
 
     def client
-      @client ||= begin 
+      @client ||= begin
         client = Bunny.new config
         client.start
         client
@@ -32,7 +32,7 @@ module TownCrier
     end
 
     def reset_client!
-      @client = nil
+      @client   = nil
       @exchange = nil
     end
 
