@@ -6,6 +6,7 @@ module TownCrier
 
     def test_publish_raises_an_exception_when_cannot_publish
       publisher = AMQP.new
+      publisher.client = OpenStruct.new stop: true
       exchange  = MiniTest::Mock.new
       exchange.expect :publish, Exception.new, [String]
       publisher.exchange = exchange
