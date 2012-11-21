@@ -1,7 +1,7 @@
 module TownCrier
   class AMQP
     attr_accessor :key, :config
-    attr_writer :client, :exchange
+    attr_writer :client_class, :exchange
 
     def initialize attributes = nil
       attributes ||= {}
@@ -13,25 +13,25 @@ module TownCrier
     end
 
     def publish payload, options = {}
-      exchange.publish payload, :content_type => 'application/json',
-                                :persistent   => true,
-                                :key          => options[:test] ? "test.#{key}" : key
+      client = client_class.new config
+      client.start
+      exchange(client).publish payload, :content_type => 'application/json',
+                                        :persistent   => true,
+                                        :key          => options[:test] ? "test.#{key}" : key
     rescue => e
       raise PublishError.new('A publishing error occurred', e)
+    ensure
+      client.stop
     end
 
-    def client
-      @client ||= begin
-        client = Bunny.new config
-        client.start
-        client
-      end
+    def client_class
+      @client_class ||= Bunny
     end
 
-    def exchange
-      @exchange ||= client.exchange 'town_crier',
-                                    :durable => true,
-                                    :type    => :topic
+    def exchange client
+      client.exchange   'town_crier',
+                        :durable => true,
+                        :type    => :topic
     end
   end
 end
