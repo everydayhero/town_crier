@@ -14,8 +14,8 @@ module TownCrier
 
     def publish payload, options = {}
       exchange.publish payload, :content_type => 'application/json',
-                                        :persistent   => true,
-                                        :key          => options[:test] ? "test.#{key}" : key
+                                :persistent   => true,
+                                :key          => options[:test] ? "test.#{key}" : key
     rescue => e
       raise PublishError.new('A publishing error occurred', e)
     ensure
@@ -24,9 +24,11 @@ module TownCrier
     end
 
     def client
-      client ||= Bunny.new config
-      client.start
-      client
+      @client ||= begin 
+        client = Bunny.new config
+        client.start
+        client
+      end
     end
 
     def reset_client!

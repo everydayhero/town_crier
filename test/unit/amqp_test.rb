@@ -15,19 +15,8 @@ module TownCrier
       end
     end
 
-    def test_publish_resets_the_client
-      publisher = AMQP.new
-      exchange  = MiniTest::Mock.new
-      exchange.expect :publish, Exception.new, [String]
-      client1 = publisher.client
-      publisher.exchange = exchange
-
-      refute client1 === publisher.client
-    end
-
     def model
       AMQP.new
     end
   end
-
 end
