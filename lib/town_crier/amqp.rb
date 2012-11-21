@@ -13,7 +13,7 @@ module TownCrier
     end
 
     def publish payload, options = {}
-      exchange(client).publish payload, :content_type => 'application/json',
+      exchange.publish payload, :content_type => 'application/json',
                                         :persistent   => true,
                                         :key          => options[:test] ? "test.#{key}" : key
     rescue => e
@@ -35,9 +35,9 @@ module TownCrier
     end
 
     def exchange
-      @exchange ||= client.exchange   'town_crier',
-                                  :durable => true,
-                                :type    => :topic
+      @exchange ||= client.exchange 'town_crier',
+                                    :durable => true,
+                                    :type    => :topic
     end
   end
 end
