@@ -24,7 +24,7 @@ module TownCrier
     end
 
     def client
-      @client ||= Bunny.new config
+      client ||= Bunny.new config
       client.start
       client
     end
