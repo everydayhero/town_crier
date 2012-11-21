@@ -18,6 +18,9 @@ module TownCrier
                                 :key          => options[:test] ? "test.#{key}" : key
     rescue => e
       raise PublishError.new('A publishing error occurred', e)
+    ensure
+      client.stop
+      reset_client!
     end
 
     def client
@@ -26,6 +29,11 @@ module TownCrier
         client.start
         client
       end
+    end
+
+    def reset_client!
+      @client   = nil
+      @exchange = nil
     end
 
     def exchange
