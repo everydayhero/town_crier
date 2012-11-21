@@ -35,9 +35,9 @@ module TownCrier
     end
 
     def exchange
-      client.exchange   'town_crier',
-                        :durable => true,
-                        :type    => :topic
+      @exchange ||= client.exchange   'town_crier',
+                                  :durable => true,
+                                :type    => :topic
     end
   end
 end
